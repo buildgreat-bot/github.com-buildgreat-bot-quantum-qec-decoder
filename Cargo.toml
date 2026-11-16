@@ -1,0 +1,27 @@
+[package]
+name = "qldpc-rs"
+version = "0.1.0"
+edition = "2021"
+authors = ["Sridatta Veladi"]
+description = "Ultra-low-latency, zero-allocation qLDPC Belief Propagation + OSD decoder in Rust"
+
+[lib]
+name = "qldpc_rs"
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+rayon = "1.10"
+ndarray = "0.16"
+pyo3 = { version = "0.24.1", features = ["extension-module", "abi3-py310"], optional = true }
+numpy = { version = "0.24", optional = true }
+
+[features]
+default = ["python"]
+python = ["dep:pyo3", "dep:numpy"]
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 1
+panic = "abort"
+overflow-checks = false

@@ -1,0 +1,31 @@
+[build-system]
+requires = ["maturin>=1.5,<2.0"]
+build-backend = "maturin"
+
+[project]
+name = "qldpc-rs"
+version = "0.1.0"
+description = "Ultra-low-latency, zero-allocation qLDPC BP-OSD decoder in pure Rust with PyO3 bindings"
+readme = "README.md"
+authors = [{ name = "Sridatta Veladi" }]
+license = { text = "MIT" }
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.24",
+]
+
+[project.optional-dependencies]
+verify = [
+    "stim>=1.13",
+    "ldpc",
+    "matplotlib",
+    "pytest-timeout",
+]
+
+[tool.maturin]
+features = ["pyo3/extension-module"]
+module-name = "qldpc_rs"
+
+[tool.pytest.ini_options]
+timeout_method = "thread"
+timeout = 60
